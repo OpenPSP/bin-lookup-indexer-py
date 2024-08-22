@@ -1,0 +1,58 @@
+[tool.poetry]
+name = "bin-lookup-indexer"
+version = "0.1.0"
+description = "Project that parses BIN range files, generates an AVL range tree index, and stores the BIN data in Redis for fast lookups."
+authors = ["Mikel"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+avl-range-tree = "^0.4.0"
+redis = "^5.0.8"
+svix-ksuid = "^0.6.2"
+pycountry = "^24.6.1"
+loguru = "^0.7.2"
+orjson = "^3.10.7"
+
+[tool.poetry.dev-dependencies]
+pytest = "^8.3.2"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.8.0"
+mypy = "^1.11.1"
+
+[tool.black]
+line-length = 88
+target-version = ['py312']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.idea    # Exclude .idea folder
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.mypy]
+python_version = "3.12"
+check_untyped_defs = true
+disallow_untyped_calls = true
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_return_any = true
+exclude = '\.idea'  # Exclude .idea folder
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+index_cli = 'bin_lookup_indexer.main:main'
